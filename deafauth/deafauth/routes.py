@@ -36,6 +36,10 @@ def signup():
     if existing_user:
         return jsonify({'error': 'User with this email already exists'}), 409
     
+    # Validate email format (basic validation)
+    if '@' not in email or '.' not in email.split('@')[-1]:
+        return jsonify({'error': 'Invalid email format'}), 400
+    
     # Create new user
     user = User(email=email)
     user.set_password(password)
@@ -46,17 +50,32 @@ def signup():
         db.session.commit()
         
         # In a real application, send verification email here
-        # For now, we return the token in the response
-        return jsonify({
-            'message': 'User created successfully',
-            'user': user.to_dict(),
-            'verification_token': user.verification_token,
-            'note': 'In production, verification token would be sent via email'
-        }), 201
+        # TODO: Integrate email service (SendGrid, AWS SES, etc.)
+        # send_verification_email(user.email, user.verification_token)
+        
+        # For development/testing only - in production, never expose the token
+        # This allows testing the template without email integration
+        import os
+        if os.environ.get('FLASK_ENV') == 'development':
+            return jsonify({
+                'message': 'User created successfully',
+                'user': user.to_dict(),
+                'verification_token': user.verification_token,
+                'note': 'DEV MODE: Token shown for testing. In production, sent via email.'
+            }), 201
+        else:
+            return jsonify({
+                'message': 'User created successfully. Please check your email to verify your account.',
+                'user': user.to_dict()
+            }), 201
     
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': 'Failed to create user', 'details': str(e)}), 500
+        # Don't expose detailed errors in production
+        import os
+        if os.environ.get('FLASK_ENV') == 'development':
+            return jsonify({'error': 'Failed to create user', 'details': str(e)}), 500
+        return jsonify({'error': 'Failed to create user'}), 500
 
 
 @auth_bp.route('/verify/<token>', methods=['GET', 'POST'])
@@ -91,7 +110,11 @@ def verify_email(token):
     
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': 'Failed to verify email', 'details': str(e)}), 500
+        # Don't expose detailed errors in production
+        import os
+        if os.environ.get('FLASK_ENV') == 'development':
+            return jsonify({'error': 'Failed to verify email', 'details': str(e)}), 500
+        return jsonify({'error': 'Failed to verify email'}), 500
 
 
 @auth_bp.route('/login', methods=['POST'])

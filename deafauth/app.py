@@ -24,7 +24,16 @@ def create_app(config=None):
     app = Flask(__name__)
     
     # Default configuration
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+    # WARNING: SECRET_KEY must be set in production!
+    # Generate with: python -c "import secrets; print(secrets.token_hex(32))"
+    secret_key = os.environ.get('SECRET_KEY')
+    if not secret_key:
+        if os.environ.get('FLASK_ENV') == 'production':
+            raise ValueError('SECRET_KEY environment variable must be set in production!')
+        # Development fallback only
+        secret_key = 'dev-secret-key-CHANGE-IN-PRODUCTION-' + os.urandom(16).hex()
+    
+    app.config['SECRET_KEY'] = secret_key
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
         'DATABASE_URL',
         'sqlite:///deafauth.db'

@@ -200,13 +200,16 @@ app = create_app({
 
 ⚠️ **Important for Production:**
 
-1. **Secret Key**: Always set a strong `SECRET_KEY` environment variable
-2. **Email Service**: Integrate a real email service for verification emails (SendGrid, AWS SES, etc.)
-3. **HTTPS**: Use HTTPS in production to protect tokens in transit
-4. **Password Requirements**: Add password strength validation
-5. **Rate Limiting**: Implement rate limiting for signup/login endpoints
-6. **Database**: Use PostgreSQL or MySQL instead of SQLite in production
-7. **Token Expiration**: Adjust token expiration time as needed (default: 1 hour)
+1. **Secret Key**: **REQUIRED** - Set a strong `SECRET_KEY` environment variable. Generate with: `python -c "import secrets; print(secrets.token_hex(32))"`
+2. **Environment**: Set `FLASK_ENV=production` to enable production security features
+3. **Email Service**: Integrate a real email service for verification emails (SendGrid, AWS SES, etc.)
+4. **HTTPS**: Use HTTPS in production to protect tokens in transit
+5. **Password Requirements**: Add password strength validation (minimum length, complexity, etc.)
+6. **Rate Limiting**: Implement rate limiting for signup/login endpoints to prevent brute force attacks
+7. **Database**: Use PostgreSQL or MySQL instead of SQLite in production
+8. **Token Expiration**: Adjust token expiration time as needed (default: 1 hour)
+9. **Input Validation**: Consider using email validation libraries like `email-validator` for more robust validation
+10. **Error Messages**: Production mode automatically hides detailed error messages
 
 ## Customization
 
