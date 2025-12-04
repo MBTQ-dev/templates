@@ -50,8 +50,8 @@ Set environment variables (optional):
 
 ```bash
 # Set a secret key for PASETO tokens (REQUIRED in production)
-# Secret must be at least 32 bytes for v4.local PASETO
-export SECRET_KEY="your-secret-key-here-must-be-at-least-32-chars"
+# A strong random secret is automatically hashed to create the encryption key
+export SECRET_KEY="your-secret-key-here"
 
 # Set database URL (defaults to SQLite)
 export DATABASE_URL="sqlite:///deafauth.db"

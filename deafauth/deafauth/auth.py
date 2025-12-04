@@ -1,10 +1,11 @@
 """
-Pasteo (PASETO) token handling for authentication.
+PASETO token handling for authentication.
 """
 import pyseto
 from pyseto import Key
 import secrets
 import json
+import hashlib
 from datetime import datetime, timedelta
 from functools import wraps
 from flask import request, jsonify, current_app
@@ -13,12 +14,9 @@ from flask import request, jsonify, current_app
 def _get_key():
     """Get or create the PASETO key from the app config."""
     secret = current_app.config['SECRET_KEY'].encode('utf-8')
-    # Ensure secret is 32 bytes for v4.local
-    if len(secret) < 32:
-        secret = secret.ljust(32, b'\0')
-    elif len(secret) > 32:
-        secret = secret[:32]
-    return Key.new(version=4, purpose="local", key=secret)
+    # Use SHA-256 to derive a consistent 32-byte key from the secret
+    key_bytes = hashlib.sha256(secret).digest()
+    return Key.new(version=4, purpose="local", key=key_bytes)
 
 
 def generate_token(user_id, expires_in=3600):
