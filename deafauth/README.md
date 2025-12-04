@@ -7,7 +7,7 @@ A lightweight, modular Flask-based authentication system template designed for q
 - **User Signup**: Register new users with email and password
 - **Email Verification**: Basic email verification mechanism
 - **Secure Login**: Password hashing with Werkzeug
-- **JWT Tokens**: Stateless authentication with JSON Web Tokens
+- **Pasteo Tokens**: Stateless authentication with Pasteo Tokens
 - **Protected Routes**: Decorator-based route protection
 - **SQLite Database**: Built-in SQLite support (easily adaptable to PostgreSQL, MySQL, etc.)
 
@@ -20,7 +20,7 @@ deafauth/
 │   ├── __init__.py       # Blueprint initialization
 │   ├── routes.py         # API endpoints (signup, login, verify)
 │   ├── models.py         # User database model
-│   └── auth.py           # JWT token handling and decorators
+│   └── auth.py           # Pasteo token handling and decorators
 ├── static/               # Static files (CSS, JS, images)
 ├── templates/            # HTML templates (optional)
 └── requirements.txt      # Python dependencies
@@ -47,7 +47,7 @@ pip install -r requirements.txt
 Set environment variables (optional):
 
 ```bash
-# Set a secret key for JWT tokens (REQUIRED in production)
+# Set a secret key for Pasteo tokens (REQUIRED in production)
 export SECRET_KEY="your-secret-key-here"
 
 # Set database URL (defaults to SQLite)
@@ -146,7 +146,7 @@ Response:
 ### Get Current User
 ```
 GET /auth/me
-Authorization: Bearer <jwt_token>
+Authorization: Bearer <pasteo_token>
 ```
 
 Response:
@@ -193,7 +193,7 @@ app = create_app({
 
 1. **Signup**: User registers with email and password
 2. **Verification**: User verifies email using the verification token
-3. **Login**: User logs in and receives a JWT token
+3. **Login**: User logs in and receives a Pasteo token
 4. **Protected Access**: User includes the token in Authorization header for protected routes
 
 ## Security Considerations

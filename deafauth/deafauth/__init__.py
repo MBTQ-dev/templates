@@ -5,7 +5,7 @@ This module provides basic authentication functionality including:
 - User signup
 - Email verification
 - User login
-- JWT token handling
+- Pasteo token handling
 """
 from flask import Blueprint
 

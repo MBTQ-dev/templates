@@ -1,7 +1,7 @@
 """
-JWT token handling for authentication.
+Pasteo token handling for authentication.
 """
-import jwt
+import jwt as pasteo
 import secrets
 from datetime import datetime, timedelta
 from functools import wraps
@@ -10,14 +10,14 @@ from flask import request, jsonify, current_app
 
 def generate_token(user_id, expires_in=3600):
     """
-    Generate a JWT token for a user.
+    Generate a Pasteo token for a user.
     
     Args:
         user_id: User's ID
         expires_in: Token expiration time in seconds (default: 1 hour)
     
     Returns:
-        JWT token string
+        Pasteo token string
     """
     payload = {
         'user_id': user_id,
@@ -25,7 +25,7 @@ def generate_token(user_id, expires_in=3600):
         'iat': datetime.utcnow()
     }
     
-    token = jwt.encode(
+    token = pasteo.encode(
         payload,
         current_app.config['SECRET_KEY'],
         algorithm='HS256'
@@ -36,24 +36,24 @@ def generate_token(user_id, expires_in=3600):
 
 def decode_token(token):
     """
-    Decode and verify a JWT token.
+    Decode and verify a Pasteo token.
     
     Args:
-        token: JWT token string
+        token: Pasteo token string
     
     Returns:
         Decoded payload or None if invalid
     """
     try:
-        payload = jwt.decode(
+        payload = pasteo.decode(
             token,
             current_app.config['SECRET_KEY'],
             algorithms=['HS256']
         )
         return payload
-    except jwt.ExpiredSignatureError:
+    except pasteo.ExpiredSignatureError:
         return None
-    except jwt.InvalidTokenError:
+    except pasteo.InvalidTokenError:
         return None
 
 
