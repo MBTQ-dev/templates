@@ -133,7 +133,7 @@ Response:
 ```json
 {
   "message": "Login successful",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token": "pasteo_a3f2b1c9d8e7f6a5b4c3d2e1f0a9b8c7...",
   "user": {
     "id": 1,
     "email": "user@example.com",
@@ -146,7 +146,7 @@ Response:
 ### Get Current User
 ```
 GET /auth/me
-Authorization: Bearer <pasteo_token>
+Authorization: Bearer <token>
 ```
 
 Response:
