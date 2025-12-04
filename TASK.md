@@ -1,7 +1,10 @@
 # Task: Replace JWT with Paseto Across Codebase
 
+## About Paseto
+[Paseto (Platform-Agnostic Security Tokens)](https://paseto.io/) is a secure alternative to JWT (JSON Web Tokens) that provides better security guarantees and simpler implementation. Unlike JWT, Paseto is designed to prevent common cryptographic pitfalls and misuse.
+
 ## Objective
-Replace all occurrences of 'JWT' with 'Paseto' throughout the entire codebase. This is a comprehensive rebranding/terminology update that must be applied consistently across all relevant areas of the repository.
+Replace all occurrences of 'JWT' with 'Paseto' throughout the entire codebase. This is a terminology update that prepares the codebase for potential migration to the Paseto token standard, while maintaining compatibility with existing JWT-based implementations during the transition.
 
 ## Scope
 This replacement task applies to:
@@ -96,11 +99,12 @@ After making replacements, verify that:
 
 ## Notes
 
-- This is primarily a terminology/branding change, not a functional change
-- The underlying token technology (PyJWT library) remains the same
+- This terminology change prepares the codebase for potential migration to the Paseto token standard
+- The underlying token technology (PyJWT library) remains the same during this phase
 - Focus on user-facing terminology and internal code references
 - Maintain backwards compatibility where possible
 - Update error messages and logging statements to use new terminology
+- For more information about Paseto, visit: https://paseto.io/
 
 ## Review Guidelines
 
