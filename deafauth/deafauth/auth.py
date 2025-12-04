@@ -1,59 +1,74 @@
 """
-Pasteo token handling for authentication.
+Pasteo (PASETO) token handling for authentication.
 """
-import jwt as pasteo
+import pyseto
+from pyseto import Key
 import secrets
+import json
 from datetime import datetime, timedelta
 from functools import wraps
 from flask import request, jsonify, current_app
 
 
+def _get_key():
+    """Get or create the PASETO key from the app config."""
+    secret = current_app.config['SECRET_KEY'].encode('utf-8')
+    # Ensure secret is 32 bytes for v4.local
+    if len(secret) < 32:
+        secret = secret.ljust(32, b'\0')
+    elif len(secret) > 32:
+        secret = secret[:32]
+    return Key.new(version=4, purpose="local", key=secret)
+
+
 def generate_token(user_id, expires_in=3600):
     """
-    Generate a Pasteo token for a user.
+    Generate a PASETO token for a user.
     
     Args:
         user_id: User's ID
         expires_in: Token expiration time in seconds (default: 1 hour)
     
     Returns:
-        Pasteo token string
+        PASETO token string
     """
     payload = {
         'user_id': user_id,
-        'exp': datetime.utcnow() + timedelta(seconds=expires_in),
-        'iat': datetime.utcnow()
+        'exp': (datetime.utcnow() + timedelta(seconds=expires_in)).isoformat(),
+        'iat': datetime.utcnow().isoformat()
     }
     
-    token = pasteo.encode(
-        payload,
-        current_app.config['SECRET_KEY'],
-        algorithm='HS256'
-    )
+    key = _get_key()
+    token = pyseto.encode(key, json.dumps(payload).encode('utf-8'))
     
-    return token
+    return token.decode('utf-8')
 
 
 def decode_token(token):
     """
-    Decode and verify a Pasteo token.
+    Decode and verify a PASETO token.
     
     Args:
-        token: Pasteo token string
+        token: PASETO token string
     
     Returns:
         Decoded payload or None if invalid
     """
     try:
-        payload = pasteo.decode(
-            token,
-            current_app.config['SECRET_KEY'],
-            algorithms=['HS256']
-        )
+        key = _get_key()
+        decoded = pyseto.decode(key, token.encode('utf-8'))
+        payload = json.loads(decoded.payload.decode('utf-8'))
+        
+        # Check expiration
+        if 'exp' in payload:
+            exp_time = datetime.fromisoformat(payload['exp'])
+            if datetime.utcnow() > exp_time:
+                return None
+        
         return payload
-    except pasteo.ExpiredSignatureError:
+    except (pyseto.DecryptError, pyseto.VerifyError, ValueError, KeyError):
         return None
-    except pasteo.InvalidTokenError:
+    except Exception:
         return None
 
 

@@ -120,7 +120,7 @@ def verify_email(token):
 @auth_bp.route('/login', methods=['POST'])
 def login():
     """
-    Authenticate user and return Pasteo token.
+    Authenticate user and return PASETO token.
     
     Request body:
         {
@@ -129,7 +129,7 @@ def login():
         }
     
     Returns:
-        JSON response with Pasteo token
+        JSON response with PASETO token
     """
     data = request.get_json()
     
@@ -150,7 +150,7 @@ def login():
     if not user.is_verified:
         return jsonify({'error': 'Email not verified. Please verify your email first.'}), 403
     
-    # Generate Pasteo token
+    # Generate PASETO token
     token = generate_token(user.id)
     
     return jsonify({

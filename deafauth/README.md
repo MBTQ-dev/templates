@@ -2,12 +2,14 @@
 
 A lightweight, modular Flask-based authentication system template designed for quick project starts.
 
+This template uses **PASETO (Platform-Agnostic SEcurity TOkens)** for authentication, a more secure alternative to JWT that eliminates common cryptographic pitfalls. Learn more at [https://paseto.io](https://paseto.io).
+
 ## Features
 
 - **User Signup**: Register new users with email and password
 - **Email Verification**: Basic email verification mechanism
 - **Secure Login**: Password hashing with Werkzeug
-- **Pasteo Tokens**: Stateless authentication with Pasteo Tokens
+- **Pasteo Tokens**: Stateless authentication with PASETO (Platform-Agnostic SEcurity TOkens)
 - **Protected Routes**: Decorator-based route protection
 - **SQLite Database**: Built-in SQLite support (easily adaptable to PostgreSQL, MySQL, etc.)
 
@@ -20,7 +22,7 @@ deafauth/
 │   ├── __init__.py       # Blueprint initialization
 │   ├── routes.py         # API endpoints (signup, login, verify)
 │   ├── models.py         # User database model
-│   └── auth.py           # Pasteo token handling and decorators
+│   └── auth.py           # PASETO token handling and decorators
 ├── static/               # Static files (CSS, JS, images)
 ├── templates/            # HTML templates (optional)
 └── requirements.txt      # Python dependencies
@@ -47,8 +49,9 @@ pip install -r requirements.txt
 Set environment variables (optional):
 
 ```bash
-# Set a secret key for Pasteo tokens (REQUIRED in production)
-export SECRET_KEY="your-secret-key-here"
+# Set a secret key for PASETO tokens (REQUIRED in production)
+# Secret must be at least 32 bytes for v4.local PASETO
+export SECRET_KEY="your-secret-key-here-must-be-at-least-32-chars"
 
 # Set database URL (defaults to SQLite)
 export DATABASE_URL="sqlite:///deafauth.db"
@@ -133,7 +136,7 @@ Response:
 ```json
 {
   "message": "Login successful",
-  "token": "pasteo_a3f2b1c9d8e7f6a5b4c3d2e1f0a9b8c7...",
+  "token": "v4.local.ntllN6P5HrodlH-T8fBOocd3lMMFqx4ZAyjDUKb0swKj...",
   "user": {
     "id": 1,
     "email": "user@example.com",
@@ -193,8 +196,20 @@ app = create_app({
 
 1. **Signup**: User registers with email and password
 2. **Verification**: User verifies email using the verification token
-3. **Login**: User logs in and receives a Pasteo token
+3. **Login**: User logs in and receives a PASETO token
 4. **Protected Access**: User includes the token in Authorization header for protected routes
+
+## Why PASETO?
+
+PASETO (Platform-Agnostic SEcurity TOkens) offers several advantages over JWT:
+
+- **Secure by default**: No algorithm selection attacks (e.g., "alg: none" vulnerability)
+- **Versioned protocol**: Each version is a complete specification (v4 uses modern crypto)
+- **No footguns**: Removes dangerous features that cause JWT vulnerabilities
+- **Built-in encryption**: v4.local provides authenticated encryption (no separate signing/encryption steps)
+- **Simpler**: Fewer knobs to turn = fewer ways to misconfigure
+
+Learn more: [https://paseto.io](https://paseto.io) | [PySETO GitHub](https://github.com/dajiaji/pyseto)
 
 ## Security Considerations
 
