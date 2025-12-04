@@ -78,7 +78,7 @@ After making replacements, verify that:
    - Check that API documentation is consistent
 
 4. **Compatibility**
-   - Confirm the underlying JWT functionality is unchanged
+   - Confirm the underlying token library functionality is unchanged (PyJWT library continues to work)
    - Verify that external integrations are not broken
    - Test with existing clients/consumers if applicable
 
