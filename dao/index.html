@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DAO - Governance Interface">
+    <title>DAO - Governance Interface</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>DAO</h1>
+        <p class="tagline">Decentralized Governance Interface</p>
+    </header>
+
+    <main role="main">
+        <section class="governance-stats" aria-labelledby="stats-heading">
+            <h2 id="stats-heading">Governance Overview</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Members</h3>
+                    <p class="stat-value">1,247</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Proposals</h3>
+                    <p class="stat-value">8</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Voting Power</h3>
+                    <p class="stat-value">156</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Passed This Month</h3>
+                    <p class="stat-value">12</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="proposals-section" aria-labelledby="proposals-heading">
+            <h2 id="proposals-heading">Active Proposals</h2>
+            
+            <article class="proposal-card">
+                <div class="proposal-header">
+                    <h3>Proposal #42: Implement New Trust Metrics</h3>
+                    <span class="status-badge status-active" role="status">Active</span>
+                </div>
+                <p class="proposal-description">
+                    This proposal suggests adding additional trust metrics to the FibronRose dashboard, 
+                    including peer review scores and contribution history.
+                </p>
+                <div class="proposal-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Proposed by:</span>
+                        <span class="meta-value">Alice.eth</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Voting ends:</span>
+                        <time datetime="2024-01-20">January 20, 2024</time>
+                    </div>
+                </div>
+                <div class="voting-section">
+                    <h4>Current Results</h4>
+                    <div class="vote-bars">
+                        <div class="vote-bar vote-for">
+                            <span class="vote-label">For (67%)</span>
+                            <div class="vote-fill" style="width: 67%;" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                            <span class="vote-count">834 votes</span>
+                        </div>
+                        <div class="vote-bar vote-against">
+                            <span class="vote-label">Against (28%)</span>
+                            <div class="vote-fill" style="width: 28%;" role="progressbar" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100"></div>
+                            <span class="vote-count">349 votes</span>
+                        </div>
+                        <div class="vote-bar vote-abstain">
+                            <span class="vote-label">Abstain (5%)</span>
+                            <div class="vote-fill" style="width: 5%;" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                            <span class="vote-count">62 votes</span>
+                        </div>
+                    </div>
+                    <div class="voting-actions">
+                        <button class="vote-btn vote-for-btn" aria-label="Vote for proposal 42">Vote For</button>
+                        <button class="vote-btn vote-against-btn" aria-label="Vote against proposal 42">Vote Against</button>
+                        <button class="vote-btn vote-abstain-btn" aria-label="Abstain from voting on proposal 42">Abstain</button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="proposal-card">
+                <div class="proposal-header">
+                    <h3>Proposal #41: Expand Agent Capabilities</h3>
+                    <span class="status-badge status-active" role="status">Active</span>
+                </div>
+                <p class="proposal-description">
+                    Proposal to add three new AI agents: Content Moderator, Sentiment Analyzer, and Trend Detector.
+                </p>
+                <div class="proposal-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Proposed by:</span>
+                        <span class="meta-value">Bob.eth</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Voting ends:</span>
+                        <time datetime="2024-01-22">January 22, 2024</time>
+                    </div>
+                </div>
+                <div class="voting-section">
+                    <h4>Current Results</h4>
+                    <div class="vote-bars">
+                        <div class="vote-bar vote-for">
+                            <span class="vote-label">For (82%)</span>
+                            <div class="vote-fill" style="width: 82%;" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
+                            <span class="vote-count">1,021 votes</span>
+                        </div>
+                        <div class="vote-bar vote-against">
+                            <span class="vote-label">Against (15%)</span>
+                            <div class="vote-fill" style="width: 15%;" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                            <span class="vote-count">187 votes</span>
+                        </div>
+                        <div class="vote-bar vote-abstain">
+                            <span class="vote-label">Abstain (3%)</span>
+                            <div class="vote-fill" style="width: 3%;" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="100"></div>
+                            <span class="vote-count">37 votes</span>
+                        </div>
+                    </div>
+                    <div class="voting-actions">
+                        <button class="vote-btn vote-for-btn" aria-label="Vote for proposal 41">Vote For</button>
+                        <button class="vote-btn vote-against-btn" aria-label="Vote against proposal 41">Vote Against</button>
+                        <button class="vote-btn vote-abstain-btn" aria-label="Abstain from voting on proposal 41">Abstain</button>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="create-proposal-section" aria-labelledby="create-heading">
+            <h2 id="create-heading">Create New Proposal</h2>
+            <form id="proposal-form" class="proposal-form">
+                <div class="form-group">
+                    <label for="proposal-title">Proposal Title</label>
+                    <input 
+                        type="text" 
+                        id="proposal-title" 
+                        name="title" 
+                        required 
+                        placeholder="e.g., Implement Feature X"
+                        aria-describedby="title-hint"
+                    >
+                    <p id="title-hint" class="hint">Short, descriptive title for your proposal</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="proposal-description">Description</label>
+                    <textarea 
+                        id="proposal-description" 
+                        name="description" 
+                        required 
+                        rows="6"
+                        placeholder="Detailed description of your proposal..."
+                        aria-describedby="description-hint"
+                    ></textarea>
+                    <p id="description-hint" class="hint">Explain what you're proposing and why</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="voting-duration">Voting Duration (days)</label>
+                    <select id="voting-duration" name="duration" required>
+                        <option value="7">7 days</option>
+                        <option value="14" selected>14 days</option>
+                        <option value="21">21 days</option>
+                        <option value="30">30 days</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Proposal</button>
+            </form>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2024 DAO - Part of the Accessible Ecosystem</p>
+        <nav aria-label="Ecosystem navigation">
+            <a href="../pinkflow/">PinkFlow</a>
+            <a href="../pinksync/">PinkSync</a>
+            <a href="../deafauth/">DeafAuth</a>
+            <a href="../fibronrose/">FibronRose</a>
+            <a href="../agents/">Agents</a>
+        </nav>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

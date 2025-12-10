@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PinkFlow - Accessible Query Interface">
+    <title>PinkFlow - Accessibility Query Interface</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>PinkFlow</h1>
+        <p class="tagline">Accessibility Query Interface</p>
+    </header>
+
+    <main role="main">
+        <section class="query-section" aria-labelledby="query-heading">
+            <h2 id="query-heading">Search & Query</h2>
+            <form id="query-form" role="search">
+                <label for="query-input">
+                    Enter your accessibility query:
+                    <span class="sr-only">(Press Enter or click Search to submit)</span>
+                </label>
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        id="query-input" 
+                        name="query" 
+                        placeholder="e.g., Find accessible components..."
+                        aria-describedby="query-hint"
+                        autocomplete="off"
+                    >
+                    <button type="submit" aria-label="Submit query">Search</button>
+                </div>
+                <p id="query-hint" class="hint">Use natural language to search for accessible components and patterns</p>
+            </form>
+        </section>
+
+        <section class="results-section" aria-labelledby="results-heading" aria-live="polite">
+            <h2 id="results-heading">Results</h2>
+            <div id="results-container" class="results-container">
+                <p class="empty-state">Enter a query to see results</p>
+            </div>
+        </section>
+
+        <section class="filters-section" aria-labelledby="filters-heading">
+            <h2 id="filters-heading">Filters</h2>
+            <fieldset>
+                <legend>Filter by Category</legend>
+                <div class="filter-group">
+                    <label>
+                        <input type="checkbox" name="filter" value="components" checked>
+                        Components
+                    </label>
+                    <label>
+                        <input type="checkbox" name="filter" value="patterns" checked>
+                        Patterns
+                    </label>
+                    <label>
+                        <input type="checkbox" name="filter" value="guidelines" checked>
+                        Guidelines
+                    </label>
+                    <label>
+                        <input type="checkbox" name="filter" value="tools" checked>
+                        Tools
+                    </label>
+                </div>
+            </fieldset>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2024 PinkFlow - Part of the Accessible Ecosystem</p>
+        <nav aria-label="Ecosystem navigation">
+            <a href="../pinksync/">PinkSync</a>
+            <a href="../deafauth/">DeafAuth</a>
+            <a href="../fibronrose/">FibronRose</a>
+            <a href="../agents/">Agents</a>
+            <a href="../dao/">DAO</a>
+        </nav>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
