@@ -84,26 +84,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
+     * HTML escape function to prevent XSS
+     * @param {string} str - String to escape
+     * @returns {string} Escaped string
+     */
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    /**
      * Display results in the results container
      * @param {Array} results - Array of result items
      * @param {string} query - The search query
      */
     function displayResults(results, query) {
         if (results.length === 0) {
-            resultsContainer.innerHTML = `
-                <p class="empty-state">
-                    ${query ? `No results found for "${query}"` : 'No results match the selected filters'}
-                </p>
-            `;
+            const emptyState = document.createElement('p');
+            emptyState.className = 'empty-state';
+            emptyState.textContent = query ? `No results found for "${query}"` : 'No results match the selected filters';
+            resultsContainer.innerHTML = '';
+            resultsContainer.appendChild(emptyState);
             return;
         }
 
         const resultsHTML = results.map(item => `
             <article class="result-item" tabindex="0">
-                <h3>${highlightText(item.title, query)}</h3>
-                <p>${highlightText(item.description, query)}</p>
+                <h3>${highlightText(escapeHtml(item.title), query)}</h3>
+                <p>${highlightText(escapeHtml(item.description), query)}</p>
                 <p class="category-tag">
-                    <small><strong>Category:</strong> ${item.category}</small>
+                    <small><strong>Category:</strong> ${escapeHtml(item.category)}</small>
                 </p>
             </article>
         `).join('');
@@ -116,14 +127,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Highlight matching text in results
-     * @param {string} text - Text to highlight
+     * @param {string} text - Text to highlight (should be HTML-escaped)
      * @param {string} query - Search query
      * @returns {string} HTML with highlighted text
      */
     function highlightText(text, query) {
         if (!query) return text;
         
-        const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+        const escapedQuery = escapeHtml(query);
+        const regex = new RegExp(`(${escapeRegex(escapedQuery)})`, 'gi');
         return text.replace(regex, '<mark>$1</mark>');
     }
 

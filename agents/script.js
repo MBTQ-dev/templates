@@ -58,11 +58,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const logEntry = document.createElement('div');
         logEntry.className = 'log-entry';
-        logEntry.innerHTML = `
-            <time datetime="${isoString}">${timeString}</time>
-            <span class="log-level log-${level}">${level.toUpperCase()}</span>
-            <span class="log-message">${message}</span>
-        `;
+        
+        // Create time element
+        const timeElement = document.createElement('time');
+        timeElement.setAttribute('datetime', isoString);
+        timeElement.textContent = timeString;
+        
+        // Create level element
+        const levelElement = document.createElement('span');
+        levelElement.className = `log-level log-${level}`;
+        levelElement.textContent = level.toUpperCase();
+        
+        // Create message element
+        const messageElement = document.createElement('span');
+        messageElement.className = 'log-message';
+        messageElement.textContent = message;
+        
+        logEntry.appendChild(timeElement);
+        logEntry.appendChild(levelElement);
+        logEntry.appendChild(messageElement);
 
         logContainer.appendChild(logEntry);
 

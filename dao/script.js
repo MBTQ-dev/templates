@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.target.reset();
 
         // In a real application, you would send this to a backend
-        console.log('New proposal:', proposal);
+        // Example: await fetch('/api/proposals', { method: 'POST', body: JSON.stringify(proposal) });
     }
 
     /**
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
 
         // In a real application, send vote to backend
-        console.log(`Voted ${voteType} on:`, proposalTitle);
+        // Example: await fetch('/api/vote', { method: 'POST', body: JSON.stringify({ proposalId, voteType }) });
     }
 
     /**
@@ -188,8 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 
-                // Could add a countdown display here
-                console.log(`${days} days, ${hours} hours remaining`);
+                // Could add a countdown display here to show remaining time
+                // e.g., update a countdown element with: `${days} days, ${hours} hours remaining`
             }
         });
     }
