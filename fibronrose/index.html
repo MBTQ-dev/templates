@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FibronRose - Trust Dashboard">
+    <title>FibronRose - Trust Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>FibronRose</h1>
+        <p class="tagline">Trust & Transparency Dashboard</p>
+    </header>
+
+    <main role="main">
+        <section class="trust-score-section" aria-labelledby="trust-heading">
+            <h2 id="trust-heading">Trust Score Overview</h2>
+            <div class="score-display">
+                <div class="score-circle" role="img" aria-label="Trust score: 87 out of 100">
+                    <span class="score-value" id="trust-score">87</span>
+                    <span class="score-label">/ 100</span>
+                </div>
+                <div class="score-details">
+                    <h3>Excellent Trust Level</h3>
+                    <p>Your trust metrics indicate a highly reliable profile with strong verification signals.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="metrics-section" aria-labelledby="metrics-heading">
+            <h2 id="metrics-heading">Trust Metrics</h2>
+            <div class="metrics-grid">
+                <article class="metric-card">
+                    <h3>Verification</h3>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 95%;" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="metric-value">95%</p>
+                    <p class="metric-desc">Email, phone, and ID verified</p>
+                </article>
+
+                <article class="metric-card">
+                    <h3>Activity History</h3>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 82%;" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="metric-value">82%</p>
+                    <p class="metric-desc">Consistent positive activity</p>
+                </article>
+
+                <article class="metric-card">
+                    <h3>Community Rating</h3>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 88%;" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="metric-value">88%</p>
+                    <p class="metric-desc">Based on 156 interactions</p>
+                </article>
+
+                <article class="metric-card">
+                    <h3>Transparency</h3>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: 90%;" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="metric-value">90%</p>
+                    <p class="metric-desc">Public profile completeness</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="activity-section" aria-labelledby="activity-heading">
+            <h2 id="activity-heading">Recent Activity</h2>
+            <ul class="activity-list" role="list">
+                <li class="activity-item">
+                    <span class="activity-icon" aria-hidden="true">✓</span>
+                    <div class="activity-content">
+                        <strong>Email Verified</strong>
+                        <time datetime="2024-01-15">January 15, 2024</time>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <span class="activity-icon" aria-hidden="true">✓</span>
+                    <div class="activity-content">
+                        <strong>Identity Document Submitted</strong>
+                        <time datetime="2024-01-14">January 14, 2024</time>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <span class="activity-icon" aria-hidden="true">★</span>
+                    <div class="activity-content">
+                        <strong>Received Positive Feedback</strong>
+                        <time datetime="2024-01-12">January 12, 2024</time>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <span class="activity-icon" aria-hidden="true">✓</span>
+                    <div class="activity-content">
+                        <strong>Profile Updated</strong>
+                        <time datetime="2024-01-10">January 10, 2024</time>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="actions-section" aria-labelledby="actions-heading">
+            <h2 id="actions-heading">Improve Your Trust Score</h2>
+            <div class="actions-grid">
+                <button class="action-button" aria-label="Verify phone number">
+                    <span class="action-icon" aria-hidden="true">📱</span>
+                    <span>Verify Phone Number</span>
+                    <span class="action-boost">+5 points</span>
+                </button>
+                <button class="action-button" aria-label="Connect social accounts">
+                    <span class="action-icon" aria-hidden="true">🔗</span>
+                    <span>Connect Social Accounts</span>
+                    <span class="action-boost">+3 points</span>
+                </button>
+                <button class="action-button" aria-label="Complete profile">
+                    <span class="action-icon" aria-hidden="true">📝</span>
+                    <span>Complete Profile</span>
+                    <span class="action-boost">+4 points</span>
+                </button>
+                <button class="action-button" aria-label="Request references">
+                    <span class="action-icon" aria-hidden="true">👥</span>
+                    <span>Request References</span>
+                    <span class="action-boost">+6 points</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2024 FibronRose - Part of the Accessible Ecosystem</p>
+        <nav aria-label="Ecosystem navigation">
+            <a href="../pinkflow/">PinkFlow</a>
+            <a href="../pinksync/">PinkSync</a>
+            <a href="../deafauth/">DeafAuth</a>
+            <a href="../agents/">Agents</a>
+            <a href="../dao/">DAO</a>
+        </nav>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
