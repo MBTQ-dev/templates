@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Build Layer · SRI · CSP · Logs</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(145deg, #f8faff 0%, #edf2f9 100%);
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            margin: 0;
+        }
+        .card {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0,20,60,0.25), inset 0 1px 2px rgba(255,255,255,0.8);
+            padding: 2.5rem;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #0b2b5c, #1b4a8b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+        .subhead {
+            font-size: 1.2rem;
+            color: #2c3e66;
+            margin-bottom: 2.5rem;
+            border-left: 5px solid #3b82f6;
+            padding-left: 1.2rem;
+            font-weight: 400;
+        }
+        .diagram {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: stretch;
+            gap: 1.5rem;
+            margin: 3rem 0 2rem;
+        }
+        .stage {
+            flex: 1 1 250px;
+            background: white;
+            border-radius: 2rem;
+            padding: 1.8rem 1.5rem;
+            box-shadow: 0 10px 20px -8px rgba(0,0,0,0.1);
+            border: 1px solid rgba(59,130,246,0.15);
+            transition: transform 0.2s ease;
+            position: relative;
+        }
+        .stage:hover {
+            transform: translateY(-6px);
+        }
+        .stage::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #3b82f6, #8b5cf6, transparent);
+            border-radius: 4px;
+            opacity: 0.6;
+        }
+        .stage-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 1.4rem;
+            color: #0b2b5c;
+        }
+        .stage-header span {
+            background: #eef4ff;
+            border-radius: 9999px;
+            padding: 0.3rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1e40af;
+        }
+        .stage-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .pill {
+            background: #f8fafc;
+            border-radius: 100px;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.95rem;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .pill.highlight {
+            background: #dbeafe;
+            border-color: #3b82f6;
+            color: #1e3a8a;
+            font-weight: 500;
+        }
+        .pill code {
+            background: rgba(0,0,0,0.04);
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+        .arrow-symbol {
+            font-size: 2.5rem;
+            color: #3b82f6;
+            opacity: 0.6;
+            align-self: center;
+        }
+        .layer-focus {
+            background: rgba(59,130,246,0.05);
+            border: 2px dashed #3b82f6;
+            border-radius: 2rem;
+            padding: 2rem;
+            margin: 2.5rem 0 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+        .layer-focus h3 {
+            width: 100%;
+            font-size: 1.8rem;
+            font-weight: 550;
+            color: #0f2b50;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .security-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            flex: 1 1 280px;
+            box-shadow: 0 8px 20px rgba(0,40,100,0.08);
+        }
+        .security-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #0b2b5c;
+        }
+        .security-card p {
+            color: #334155;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .code-snippet {
+            background: #0f172a;
+            color: #e2e8f0;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            border: 1px solid #334155;
+            margin-top: 0.8rem;
+        }
+        .log-area {
+            background: #1e293b;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            color: #cbd5e1;
+            flex: 2 1 400px;
+        }
+        .log-line {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            gap: 1rem;
+        }
+        .log-time {
+            color: #6b7280;
+            min-width: 70px;
+        }
+        .log-level {
+            background: #2d3a4f;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .log-level.warn { background: #b45309; color: #1e0f00; }
+        .log-level.info { background: #2563eb; }
+        .log-level.error { background: #b91c1c; }
+        .footer-note {
+            margin-top: 3rem;
+            text-align: center;
+            color: #4b556b;
+            font-size: 0.95rem;
+            border-top: 1px solid #d1d9ee;
+            padding-top: 1.5rem;
+        }
+        .badge {
+            background: #0b2b5c;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #9bb4e6, transparent);
+            margin: 1.8rem 0;
+        }
+        @media (max-width: 700px) {
+            body { padding: 1rem; }
+            .card { padding: 1.5rem; }
+            .diagram { flex-direction: column; }
+            .arrow-symbol { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>⚙️ The Build Layer</h1>
+    <div class="subhead">between source & production — where compilation meets SRI, CSP & observability</div>
+
+    <!-- Three-stage diagram -->
+    <div class="diagram">
+        <!-- Stage 1: Development -->
+        <div class="stage">
+            <div class="stage-header">
+                📦 Dev / Source
+                <span>ES modules + assets</span>
+            </div>
+            <div class="stage-content">
+                <div class="pill"><span>📁</span> src/ <code>App.jsx</code> <code>utils.js</code></div>
+                <div class="pill"><span>📦</span> node_modules (ESM/CJS mix)</div>
+                <div class="pill"><span>🎨</span> CSS / images</div>
+                <div class="pill"><span>🔧</span> env vars, .env</div>
+            </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="arrow-symbol">→</div>
+
+        <!-- Stage 2: BUILD (the layer) - highlighted -->
+        <div class="stage" style="background: #eff6ff; border: 2px solid #2563eb; box-shadow: 0 15px 30px -12px #1e3a8a40;">
+            <div class="stage-header">
+                🏗️ BUILD LAYER
+                <span class="badge">compile · bundle · hash</span>
+            </div>
+            <div class="stage-content">
+                <div class="pill highlight"><span>🔄</span> Bundler (Vite / Webpack / esbuild / Rspack)</div>
+                <div class="pill highlight"><span>✂️</span> Minification · Tree shaking</div>
+                <div class="pill highlight"><span>🔐</span> SRI hash generation (integrity)</div>
+                <div class="pill highlight"><span>🛡️</span> CSP nonce injection (if SSR)</div>
+                <div class="pill highlight"><span>📝</span> Build logs · source maps</div>
+            </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="arrow-symbol">→</div>
+
+        <!-- Stage 3: Production -->
+        <div class="stage">
+            <div class="stage-header">
+                🚀 Production
+                <span>CDN · browser</span>
+            </div>
+            <div class="stage-content">
+                <div class="pill"><span>📄</span> index.html (with SRI & CSP meta)</div>
+                <div class="pill"><span>⚡</span> Bundled JS <code>app.a1b2c3.js</code></div>
+                <div class="pill"><span>🎯</span> CSP headers / <code>&lt;meta&gt;</code></div>
+                <div class="pill"><span>📊</span> Runtime logs · error tracking</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deep dive: SRI, CSP, Logs -->
+    <div class="layer-focus">
+        <h3>🛡️ Inside the build layer: where security & logging hook in</h3>
+        
+        <!-- SRI card -->
+        <div class="security-card">
+            <h4>🔏 Subresource Integrity (SRI)</h4>
+            <p>The build step computes a cryptographic hash of every static file (JS, CSS). This hash becomes the <code>integrity</code> attribute in the <code>&lt;script&gt;</code> or <code>&lt;link&gt;</code> tag.</p>
+            <div class="code-snippet">
+&lt;script src="app.a1b2c3.js" 
+  integrity="sha384-4j3a...==" 
+  crossorigin="anonymous"&gt;&lt;/script&gt;
+            </div>
+            <p style="margin-top: 0.8rem; font-size: 0.9rem;">✔ Browser rejects if file doesn't match – prevents CDN tampering.</p>
+        </div>
+
+        <!-- CSP card -->
+        <div class="security-card">
+            <h4>⛑️ Content Security Policy (CSP)</h4>
+            <p>During build, you can generate a policy (as meta tag or HTTP header). For dynamic nonces (e.g., in SSR), the build can inject placeholders replaced at request time.</p>
+            <div class="code-snippet">
+&lt;meta http-equiv="Content-Security-Policy" 
+  content="default-src 'self'; 
+           script-src 'self' 'nonce-{NONCE}'; 
+           require-sri-for script;"&gt;
+            </div>
+            <p style="margin-top: 0.8rem; font-size: 0.9rem;">✔ Restricts script sources, forces SRI, mitigates XSS.</p>
+        </div>
+
+        <!-- Logging / observability area -->
+        <div class="log-area">
+            <h4 style="color: white; margin-top: 0; margin-bottom: 1.2rem; display: flex; gap: 10px;">📋 Logs & telemetry (build & runtime)</h4>
+            <div class="log-line">
+                <span class="log-time">10:32:15</span>
+                <span class="log-level info">INFO</span>
+                <span>Bundling frontend... 245 modules resolved</span>
+            </div>
+            <div class="log-line">
+                <span class="log-time">10:32:18</span>
+                <span class="log-level warn">WARN</span>
+                <span>Large chunk: vendors~main.js (2.1 MB) — consider lazy loading</span>
+            </div>
+            <div class="log-line">
+                <span class="log-time">10:32:22</span>
+                <span class="log-level info">INFO</span>
+                <span>SRI generated for 12 assets</span>
+            </div>
+            <div class="log-line">
+                <span class="log-time">10:32:25</span>
+                <span class="log-level info">INFO</span>
+                <span>CSP header built: default-src 'self'; script-src 'self' https://api.example.com</span>
+            </div>
+            <div class="log-line">
+                <span class="log-time">10:32:28</span>
+                <span class="log-level error">ERROR</span>
+                <span>Source map for chart.js missing — skipping</span>
+            </div>
+            <hr style="border-color:#334155; margin:0.8rem 0;">
+            <div style="color:#94a3b8; font-size:0.9rem;">
+                ⏱️ Runtime logs (browser / server):
+            </div>
+            <div class="log-line">
+                <span class="log-time">10:33:01</span>
+                <span class="log-level info">INFO</span>
+                <span>Nonce generated: 8X7dK9 — injected into CSP & script tags</span>
+            </div>
+            <div class="log-line">
+                <span class="log-time">10:33:05</span>
+                <span class="log-level error">ERROR</span>
+                <span>CSP violation: inline script refused — adjust policy or add nonce</span>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="badge" style="background:#2563eb;">🔍 build logs → debug</span>
+                <span class="badge" style="background:#b45309; margin-left:0.5rem;">📡 runtime logs → monitor</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Concise explanation of the 'layer' -->
+    <hr>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start; justify-content: space-between;">
+        <div style="max-width: 550px;">
+            <h3 style="font-weight: 600; margin-bottom: 1rem; color: #0f2b50;">🧱 The compilation layer – what actually happens?</h3>
+            <p style="color: #2c3e50; line-height: 1.7;">
+                The build layer <strong>transforms</strong> your developer-friendly ES modules, JSX, TypeScript, and assets into optimised, production-ready bundles. <br><br>
+                It’s here that the bundler:
+                <ul style="margin-left: 1.5rem; color: #2c3e50;">
+                    <li>Resolves imports (ESM / CommonJS interop)</li>
+                    <li>Applies tree‑shaking & minification</li>
+                    <li>Generates <strong>SRI hashes</strong> for every static file</li>
+                    <li>Injects <strong>CSP nonces</strong> (if using server‑side rendering)</li>
+                    <li>Emits detailed <strong>logs</strong> (warnings, errors, bundle stats)</li>
+                </ul>
+                Those logs are essential for debugging and optimising – they’re the "paper trail" of the compilation.
+            </p>
+        </div>
+        <div style="background: #0b2b5c10; border-radius: 2rem; padding: 1.5rem 2rem; min-width: 260px;">
+            <h4 style="color: #0b2b5c; margin-bottom: 1rem;">⚡ Modern toolchain example</h4>
+            <div style="display: flex; flex-direction: column; gap: 0.7rem;">
+                <div class="pill" style="justify-content: space-between;"><span>Vite / esbuild</span> <span style="color: #2563eb;">⚡</span></div>
+                <div class="pill" style="justify-content: space-between;"><span>Webpack / Rspack</span> <span style="color: #2563eb;">📦</span></div>
+                <div class="pill" style="justify-content: space-between;"><span>Rollup / SWC</span> <span style="color: #2563eb;">🔄</span></div>
+                <div class="pill" style="justify-content: space-between;"><span>SRI plugin / subresource</span> <span style="color: #2563eb;">🔏</span></div>
+                <div class="pill" style="justify-content: space-between;"><span>CSP middleware / generator</span> <span style="color: #2563eb;">🛡️</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer note -->
+    <div class="footer-note">
+        ⚡ The build layer is where your code becomes secure, performant, and observable. Logs from this layer are the first line of defence & debugging.
+    </div>
+</div>
+</body>
+</html>
