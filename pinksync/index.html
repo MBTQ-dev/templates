@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PinkSync - Graph API Visualization">
+    <title>PinkSync - Graph API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>PinkSync</h1>
+        <p class="tagline">Graph API Visualization</p>
+    </header>
+
+    <main role="main">
+        <section class="api-section" aria-labelledby="api-heading">
+            <h2 id="api-heading">API Explorer</h2>
+            <div class="api-controls">
+                <label for="endpoint-select">Select Endpoint:</label>
+                <select id="endpoint-select" aria-describedby="endpoint-hint">
+                    <option value="nodes">Get Nodes</option>
+                    <option value="edges">Get Edges</option>
+                    <option value="graph">Get Full Graph</option>
+                    <option value="query">Custom Query</option>
+                </select>
+                <p id="endpoint-hint" class="hint">Choose an API endpoint to explore graph data</p>
+            </div>
+            <button id="execute-btn" aria-label="Execute API request">Execute Request</button>
+        </section>
+
+        <section class="visualization-section" aria-labelledby="viz-heading">
+            <h2 id="viz-heading">Graph Visualization</h2>
+            <div id="graph-container" class="graph-container" role="img" aria-label="Graph visualization showing nodes and connections">
+                <div class="placeholder-viz">
+                    <p>Click "Execute Request" to visualize graph data</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="data-section" aria-labelledby="data-heading">
+            <h2 id="data-heading">Response Data</h2>
+            <div class="data-controls">
+                <button id="copy-btn" aria-label="Copy response data to clipboard">Copy JSON</button>
+                <button id="download-btn" aria-label="Download response data">Download JSON</button>
+            </div>
+            <pre id="data-output" aria-live="polite" aria-atomic="true"><code>{
+  "message": "No data yet - execute a request to see results"
+}</code></pre>
+        </section>
+
+        <section class="docs-section" aria-labelledby="docs-heading">
+            <h2 id="docs-heading">API Documentation</h2>
+            <article>
+                <h3>Available Endpoints</h3>
+                <ul>
+                    <li><strong>GET /nodes</strong> - Retrieve all nodes in the graph</li>
+                    <li><strong>GET /edges</strong> - Retrieve all edges (connections) in the graph</li>
+                    <li><strong>GET /graph</strong> - Retrieve complete graph structure</li>
+                    <li><strong>POST /query</strong> - Execute custom graph queries</li>
+                </ul>
+                
+                <h3>Response Format</h3>
+                <p>All responses are returned in JSON format with the following structure:</p>
+                <pre><code>{
+  "status": "success",
+  "data": { ... },
+  "timestamp": "2024-01-01T00:00:00Z"
+}</code></pre>
+            </article>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2024 PinkSync - Part of the Accessible Ecosystem</p>
+        <nav aria-label="Ecosystem navigation">
+            <a href="../pinkflow/">PinkFlow</a>
+            <a href="../deafauth/">DeafAuth</a>
+            <a href="../fibronrose/">FibronRose</a>
+            <a href="../agents/">Agents</a>
+            <a href="../dao/">DAO</a>
+        </nav>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
