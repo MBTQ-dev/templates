@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Agents - AI Agent Status Dashboard">
+    <title>Agents - AI Agent Status</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>Agents</h1>
+        <p class="tagline">AI Agent Status & Monitoring</p>
+    </header>
+
+    <main role="main">
+        <section class="overview-section" aria-labelledby="overview-heading">
+            <h2 id="overview-heading">System Overview</h2>
+            <div class="status-grid">
+                <div class="status-card">
+                    <h3>Total Agents</h3>
+                    <p class="stat-value">12</p>
+                </div>
+                <div class="status-card">
+                    <h3>Active</h3>
+                    <p class="stat-value status-active">10</p>
+                </div>
+                <div class="status-card">
+                    <h3>Idle</h3>
+                    <p class="stat-value status-idle">2</p>
+                </div>
+                <div class="status-card">
+                    <h3>Tasks Completed</h3>
+                    <p class="stat-value">1,247</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="agents-section" aria-labelledby="agents-heading">
+            <h2 id="agents-heading">Agent Status</h2>
+            <div class="agents-list" role="list">
+                <article class="agent-card" role="listitem">
+                    <div class="agent-header">
+                        <h3>Query Assistant</h3>
+                        <span class="status-badge status-active" role="status" aria-label="Status: Active">Active</span>
+                    </div>
+                    <p class="agent-description">Handles natural language queries and search requests</p>
+                    <div class="agent-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Uptime:</span>
+                            <span class="metric-value">99.8%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Requests:</span>
+                            <span class="metric-value">342</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Avg Response:</span>
+                            <span class="metric-value">1.2s</span>
+                        </div>
+                    </div>
+                    <div class="agent-actions">
+                        <button class="btn-secondary" aria-label="View Query Assistant logs">View Logs</button>
+                        <button class="btn-primary" aria-label="Restart Query Assistant">Restart</button>
+                    </div>
+                </article>
+
+                <article class="agent-card" role="listitem">
+                    <div class="agent-header">
+                        <h3>Graph Processor</h3>
+                        <span class="status-badge status-active" role="status" aria-label="Status: Active">Active</span>
+                    </div>
+                    <p class="agent-description">Processes and analyzes graph data relationships</p>
+                    <div class="agent-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Uptime:</span>
+                            <span class="metric-value">100%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Requests:</span>
+                            <span class="metric-value">156</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Avg Response:</span>
+                            <span class="metric-value">0.8s</span>
+                        </div>
+                    </div>
+                    <div class="agent-actions">
+                        <button class="btn-secondary" aria-label="View Graph Processor logs">View Logs</button>
+                        <button class="btn-primary" aria-label="Restart Graph Processor">Restart</button>
+                    </div>
+                </article>
+
+                <article class="agent-card" role="listitem">
+                    <div class="agent-header">
+                        <h3>Trust Analyzer</h3>
+                        <span class="status-badge status-active" role="status" aria-label="Status: Active">Active</span>
+                    </div>
+                    <p class="agent-description">Calculates and monitors trust scores and metrics</p>
+                    <div class="agent-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Uptime:</span>
+                            <span class="metric-value">98.5%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Requests:</span>
+                            <span class="metric-value">523</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Avg Response:</span>
+                            <span class="metric-value">2.1s</span>
+                        </div>
+                    </div>
+                    <div class="agent-actions">
+                        <button class="btn-secondary" aria-label="View Trust Analyzer logs">View Logs</button>
+                        <button class="btn-primary" aria-label="Restart Trust Analyzer">Restart</button>
+                    </div>
+                </article>
+
+                <article class="agent-card" role="listitem">
+                    <div class="agent-header">
+                        <h3>Authentication Guard</h3>
+                        <span class="status-badge status-idle" role="status" aria-label="Status: Idle">Idle</span>
+                    </div>
+                    <p class="agent-description">Monitors and validates authentication requests</p>
+                    <div class="agent-metrics">
+                        <div class="metric">
+                            <span class="metric-label">Uptime:</span>
+                            <span class="metric-value">95.2%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Requests:</span>
+                            <span class="metric-value">89</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Avg Response:</span>
+                            <span class="metric-value">0.5s</span>
+                        </div>
+                    </div>
+                    <div class="agent-actions">
+                        <button class="btn-secondary" aria-label="View Authentication Guard logs">View Logs</button>
+                        <button class="btn-primary" aria-label="Restart Authentication Guard">Restart</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="logs-section" aria-labelledby="logs-heading">
+            <h2 id="logs-heading">Recent Activity Log</h2>
+            <div class="log-container" role="log" aria-live="polite" aria-atomic="false">
+                <div class="log-entry">
+                    <time datetime="2024-01-15T10:23:15">10:23:15</time>
+                    <span class="log-level log-info">INFO</span>
+                    <span class="log-message">Query Assistant processed request #342</span>
+                </div>
+                <div class="log-entry">
+                    <time datetime="2024-01-15T10:22:48">10:22:48</time>
+                    <span class="log-level log-success">SUCCESS</span>
+                    <span class="log-message">Graph Processor completed analysis task</span>
+                </div>
+                <div class="log-entry">
+                    <time datetime="2024-01-15T10:21:30">10:21:30</time>
+                    <span class="log-level log-info">INFO</span>
+                    <span class="log-message">Trust Analyzer updated score for user #1247</span>
+                </div>
+                <div class="log-entry">
+                    <time datetime="2024-01-15T10:20:12">10:20:12</time>
+                    <span class="log-level log-warning">WARNING</span>
+                    <span class="log-message">Authentication Guard detected unusual activity</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>&copy; 2024 Agents - Part of the Accessible Ecosystem</p>
+        <nav aria-label="Ecosystem navigation">
+            <a href="../pinkflow/">PinkFlow</a>
+            <a href="../pinksync/">PinkSync</a>
+            <a href="../deafauth/">DeafAuth</a>
+            <a href="../fibronrose/">FibronRose</a>
+            <a href="../dao/">DAO</a>
+        </nav>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
